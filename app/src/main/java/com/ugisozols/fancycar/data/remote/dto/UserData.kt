@@ -1,4 +1,4 @@
-package com.ugisozols.fancycar.data.remote.responses
+package com.ugisozols.fancycar.data.remote.dto
 
 data class UserData(
     val owner: Owner,

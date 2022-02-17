@@ -1,4 +1,4 @@
-package com.ugisozols.fancycar.data.remote.responses
+package com.ugisozols.fancycar.data.remote.dto
 
 data class Owner(
     val foto: String,
