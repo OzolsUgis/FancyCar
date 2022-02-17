@@ -1,4 +1,4 @@
-package com.ugisozols.fancycar.ui.theme
+package com.ugisozols.fancycar.presentation.ui.theme
 
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.unit.Dp

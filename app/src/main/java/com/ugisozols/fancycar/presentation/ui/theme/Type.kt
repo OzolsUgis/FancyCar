@@ -1,6 +1,7 @@
-package com.ugisozols.fancycar.ui.theme
+package com.ugisozols.fancycar.presentation.ui.theme
 
 import androidx.compose.material.Typography
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -22,7 +23,8 @@ val Typography = Typography(
     body1 = TextStyle(
         fontFamily = quicksand,
         fontWeight = FontWeight.Bold,
-        fontSize = 24.sp
+        fontSize = 16.sp,
+        color = BackgroundColor
     ),
     button = TextStyle(
         fontFamily = quicksand,
@@ -32,12 +34,14 @@ val Typography = Typography(
     h1 = TextStyle(
         fontFamily = quicksand,
         fontWeight = FontWeight.Medium,
-        fontSize = 32.sp
+        fontSize = 32.sp,
+        color = BackgroundColor
     ),
     h2 = TextStyle(
         fontFamily = quicksand,
         fontWeight = FontWeight.SemiBold,
-        fontSize = 22.sp
+        fontSize = 16.sp,
+        color = BackgroundColor
     ),
     body2 = TextStyle(
         fontFamily = quicksand,
@@ -52,7 +56,8 @@ val Typography = Typography(
     h3 = TextStyle(
         fontFamily = quicksand,
         fontWeight = FontWeight.Bold,
-        fontSize = 24.sp
+        fontSize = 12.sp,
+        color = BackgroundColor
     ),
     subtitle2 = TextStyle(
         fontFamily = quicksand,

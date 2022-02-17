@@ -1,4 +1,4 @@
-package com.ugisozols.fancycar
+package com.ugisozols.fancycar.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -6,11 +6,9 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.ugisozols.fancycar.ui.theme.FancyCarTheme
+import com.ugisozols.fancycar.presentation.ui.theme.FancyCarTheme
+import com.ugisozols.fancycar.presentation.welcome_screen.WelcomeScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,7 +20,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-
+                    WelcomeScreen()
                 }
             }
         }
