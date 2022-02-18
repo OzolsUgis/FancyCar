@@ -14,7 +14,7 @@ interface CarOwnerDao {
     suspend fun deleteAllOwners()
 
     @Query("SELECT * FROM ownerdataentity")
-    fun getOwners() : List<OwnerDataEntity>
+    suspend fun getOwners() : List<OwnerDataEntity>
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

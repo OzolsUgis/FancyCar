@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface CarOwnerRepository {
 
-    fun getCarOwners() : Flow<Resource<List<CarOwner>>>
+    suspend fun getCarOwners() : Flow<Resource<List<CarOwner>>>
 }

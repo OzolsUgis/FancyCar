@@ -1,5 +1,6 @@
 package com.ugisozols.fancycar.data.local
 
+import android.util.Log
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken

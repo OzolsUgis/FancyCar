@@ -4,11 +4,13 @@ import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.ugisozols.fancycar.data.local.CarOwnerDao
 import com.ugisozols.fancycar.data.local.CarOwnerDatabase
 import com.ugisozols.fancycar.data.remote.DriverApi
 import com.ugisozols.fancycar.data.repository.CarOwnerRepositoryImpl
 import com.ugisozols.fancycar.domain.repository.CarOwnerRepository
+import com.ugisozols.fancycar.domain.use_cases.GetOwners
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,10 +36,17 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideDriverApi(): DriverApi {
+    fun provideGson() : Gson {
+        return GsonBuilder()
+            .setLenient()
+            .create()
+    }
+    @Provides
+    @Singleton
+    fun provideDriverApi(gson: Gson): DriverApi {
         return Retrofit.Builder()
             .baseUrl(DriverApi.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(DriverApi::class.java)
     }
@@ -49,5 +58,11 @@ object AppModule {
         driverApi: DriverApi
     ) : CarOwnerRepository{
         return CarOwnerRepositoryImpl(db.dao, driverApi)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetOwnersUseCase(repository : CarOwnerRepository) : GetOwners{
+        return GetOwners(repository)
     }
 }

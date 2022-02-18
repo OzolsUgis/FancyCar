@@ -5,9 +5,9 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class OwnerDataEntity(
+    val userImage : String,
     val name : String,
     val surname : String,
-    val userImage : String,
     val vehicles : List<VehicleDataEntity>,
     @PrimaryKey(autoGenerate = false)
     val ownerId : Int? = null
