@@ -3,17 +3,23 @@ package com.ugisozols.fancycar.data.local
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.ugisozols.fancycar.data.local.entity.Vehicles
+import com.ugisozols.fancycar.data.local.entity.VehicleDataEntity
 
 class Converters {
 
     @TypeConverter
-    fun fromList(vehicleList : List<Vehicles>) : String {
-        return Gson().toJson(vehicleList)
+    fun fromVehiclesList(vehicleList : List<VehicleDataEntity>) : String {
+        return Gson().toJson(
+            vehicleList,
+            object : TypeToken<List<VehicleDataEntity>>(){}.type
+        ) ?: "[]"
     }
 
     @TypeConverter
-    fun toList(string: String) : List<Vehicles>{
-        return Gson().fromJson(string, object : TypeToken<List<Vehicles>>() {}.type)
+    fun toVehiclesList(jsonString: String) : List<VehicleDataEntity>{
+        return Gson().fromJson(
+            jsonString,
+            object : TypeToken<List<VehicleDataEntity>>() {}.type
+        ) ?: emptyList()
     }
 }

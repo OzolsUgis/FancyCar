@@ -4,13 +4,13 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.ugisozols.fancycar.data.local.entity.OwnerDataEntity
-import com.ugisozols.fancycar.data.local.entity.Vehicles
+import com.ugisozols.fancycar.data.local.entity.VehicleDataEntity
 
 
 @Database(
     entities = [
         OwnerDataEntity::class,
-        Vehicles::class
+        VehicleDataEntity::class
     ],
     version = 1
 )

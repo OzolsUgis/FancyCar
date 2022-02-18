@@ -8,7 +8,7 @@ data class OwnerDataEntity(
     val name : String,
     val surname : String,
     val userImage : String,
-    val vehicles : List<Vehicles>,
+    val vehicles : List<VehicleDataEntity>,
     @PrimaryKey(autoGenerate = false)
     val ownerId : Int? = null
 

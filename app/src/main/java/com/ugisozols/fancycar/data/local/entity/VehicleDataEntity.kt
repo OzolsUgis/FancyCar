@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class Vehicles(
+data class VehicleDataEntity(
     val color: String,
     val foto: String,
     val make: String,

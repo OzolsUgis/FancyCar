@@ -6,4 +6,6 @@
     <string name="awesome_car">Get a great driver and his awesome car</string>
     <string name="start_journey">Let\'s start your journey</string>
     <string name="get_started">Get Started</string>
+    <string name="http_exception_message">Oops, Something went wrong!</string>
+    <string name="io_exception_message">Couldn\'t reach server, check your internet connection! </string>
 </resources>

@@ -4,8 +4,11 @@ import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import com.google.gson.Gson
+import com.ugisozols.fancycar.data.local.CarOwnerDao
 import com.ugisozols.fancycar.data.local.CarOwnerDatabase
 import com.ugisozols.fancycar.data.remote.DriverApi
+import com.ugisozols.fancycar.data.repository.CarOwnerRepositoryImpl
+import com.ugisozols.fancycar.domain.repository.CarOwnerRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -37,5 +40,14 @@ object AppModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(DriverApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCarOwnerRepository(
+        db : CarOwnerDatabase,
+        driverApi: DriverApi
+    ) : CarOwnerRepository{
+        return CarOwnerRepositoryImpl(db.dao, driverApi)
     }
 }
