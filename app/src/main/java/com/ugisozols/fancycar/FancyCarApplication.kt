@@ -1,4 +1,4 @@
-package com.ugisozols.fancycar.presentation
+package com.ugisozols.fancycar
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
