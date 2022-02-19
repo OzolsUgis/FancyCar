@@ -18,10 +18,14 @@ import com.ugisozols.fancycar.presentation.ui.theme.ButtonColor
 import com.ugisozols.fancycar.presentation.ui.theme.ButtonHeight
 import com.ugisozols.fancycar.presentation.ui.theme.ContentColor
 import com.ugisozols.fancycar.presentation.ui.theme.LocalSpacing
+import com.ugisozols.fancycar.util.UiEvent
+import com.ugisozols.fancycar.util.navigation.Route
 
 
 @Composable
-fun WelcomeScreen() {
+fun WelcomeScreen(
+    onNavigate : (UiEvent.Navigate) -> Unit
+) {
     val spacing = LocalSpacing.current
     Box(Modifier.fillMaxSize()) {
         Image(
@@ -64,8 +68,7 @@ fun WelcomeScreen() {
                 Spacer(modifier = Modifier.height(spacing.spacingLarge))
                 Button(
                     modifier = Modifier.height(ButtonHeight),
-                    //TODO : "Add navigation function"
-                    onClick = {},
+                    onClick = {onNavigate(UiEvent.Navigate(Route.OWNER_LIST_PAGE))},
                     shape = RoundedCornerShape(100.dp),
                     elevation = ButtonDefaults.elevation(10.dp),
                     colors = ButtonDefaults.buttonColors(

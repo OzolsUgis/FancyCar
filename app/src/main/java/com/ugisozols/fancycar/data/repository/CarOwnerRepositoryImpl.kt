@@ -1,6 +1,7 @@
 package com.ugisozols.fancycar.data.repository
 
 import android.util.Log
+import androidx.compose.ui.res.stringResource
 import com.google.gson.Gson
 import com.ugisozols.fancycar.R
 import com.ugisozols.fancycar.data.local.CarOwnerDao
@@ -30,21 +31,20 @@ class CarOwnerRepositoryImpl(
         val ownersData = dao.getOwners().map { it.toCarOwner() }
         emit(Resource.Loading(data = ownersData))
 
+
+        // TODO : "Try to create custom exception and catch that with api call "
         try {
             delay(500L)
             val apiResponse = api.getDriverList()
             dao.deleteAllOwners()
             apiResponse.data.forEach {
-                Log.d("MY_APP", it.toString())
                 if(it.owner != null || it.vehicles !=null) {
                     val userData = UserData(
-                        owner = it.owner ?: Owner("asdas", "asdasd", "sdasdasd"),
+                        owner = it.owner,
                         userid = it.userid,
                         vehicles = it.vehicles
                     )
                     dao.insertOwner(userData.toOwnerDataEntity())
-                }else{
-                    Log.d("MY_APP", "EmptyObject")
                 }
             }
         } catch (e: HttpException) {

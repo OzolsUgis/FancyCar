@@ -5,5 +5,6 @@ data class CarOwner(
     val surname : String,
     val userPicture : String,
     val vehicles : List<OwnerVehicles>,
-    val id : Int? = null
+    val id : Int? = null,
+    var isExpanded : Boolean = false
 )

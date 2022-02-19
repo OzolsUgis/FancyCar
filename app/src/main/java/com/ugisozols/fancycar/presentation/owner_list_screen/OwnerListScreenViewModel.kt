@@ -4,9 +4,11 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ugisozols.fancycar.R
 import com.ugisozols.fancycar.domain.use_cases.GetOwners
 import com.ugisozols.fancycar.util.Resource
 import com.ugisozols.fancycar.util.UiEvent
+import com.ugisozols.fancycar.util.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
@@ -28,10 +30,10 @@ class OwnerListScreenViewModel @Inject constructor(
     private var job: Job? = null
 
     init {
-        onShowList()
+        onUpdateList()
     }
 
-    fun onShowList() {
+    private fun onUpdateList() {
         job?.cancel()
         job = viewModelScope.launch {
             getOwners.invoke().onEach { result ->
@@ -43,7 +45,7 @@ class OwnerListScreenViewModel @Inject constructor(
                         )
                         _event.send(
                             UiEvent.ShowSnackbar(
-                                result.uiText.toString()
+                                result.uiText ?: UiText.StringResource(R.string.unknown_error)
                             )
                         )
                     }

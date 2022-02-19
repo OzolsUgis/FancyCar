@@ -19,7 +19,6 @@ val quicksand = FontFamily(
 
 // Set of Material typography styles to start with
 val Typography = Typography(
-
     body1 = TextStyle(
         fontFamily = quicksand,
         fontWeight = FontWeight.Bold,
@@ -39,7 +38,7 @@ val Typography = Typography(
     ),
     h2 = TextStyle(
         fontFamily = quicksand,
-        fontWeight = FontWeight.SemiBold,
+        fontWeight = FontWeight.Bold,
         fontSize = 16.sp,
         color = BackgroundColor
     ),
@@ -61,7 +60,14 @@ val Typography = Typography(
     ),
     subtitle2 = TextStyle(
         fontFamily = quicksand,
-        fontWeight = FontWeight.Medium,
-        fontSize = 30.sp
+        fontWeight = FontWeight.Bold,
+        fontSize = 32.sp,
+        color = Color.Green
+    ),
+    h4 = TextStyle(
+        fontFamily = quicksand,
+        fontWeight = FontWeight.Bold,
+        fontSize = 12.sp,
+        color = HeadingColor
     )
 )
