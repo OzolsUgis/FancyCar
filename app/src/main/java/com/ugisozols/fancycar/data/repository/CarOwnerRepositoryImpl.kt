@@ -34,6 +34,7 @@ class CarOwnerRepositoryImpl(
 
         // TODO : "Try to create custom exception and catch that with api call "
         try {
+            // Delay is only for presentation
             delay(500L)
             val apiResponse = api.getDriverList()
             dao.deleteAllOwners()
