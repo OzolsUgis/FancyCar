@@ -10,4 +10,5 @@
     <string name="io_exception_message">Couldn\'t reach server, check your internet connection! </string>
     <string name="successful_update">Update successful!</string>
     <string name="unknown_error">Unknown Error occurred</string>
+    <string name="api_error">Server overloaded </string>
 </resources>
