@@ -5,12 +5,15 @@ import com.ugisozols.fancycar.domain.model.OwnerVehicles
 
 fun VehicleDataEntity.toOwnerVehicles() : OwnerVehicles{
     return OwnerVehicles(
+        ownerId = ownerId,
         color = color,
         foto = foto,
         make = make,
         model = model,
         vehicleid = vehicleid,
         vin = vin,
-        year = year
+        year = year,
+        latitude = 0.0,
+        longitude = 0.0
     )
 }

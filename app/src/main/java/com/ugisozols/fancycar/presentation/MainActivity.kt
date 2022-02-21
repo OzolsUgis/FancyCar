@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.ugisozols.fancycar.presentation.map_screen.MapScreen
 import com.ugisozols.fancycar.presentation.owner_list_screen.OwnersListScreen
 import com.ugisozols.fancycar.presentation.ui.theme.FancyCarTheme
 import com.ugisozols.fancycar.presentation.welcome_screen.WelcomeScreen
@@ -33,7 +34,7 @@ class MainActivity : ComponentActivity() {
                     Modifier.fillMaxSize(),
                     scaffoldState
                 ) {
-                    NavHost(navController = navController, startDestination = Route.WELCOME_PAGE){
+                    NavHost(navController = navController, startDestination = Route.MAP_SCREEN){
                         composable(Route.WELCOME_PAGE){
                             WelcomeScreen(
                                 onNavigate = navController::navigate
@@ -41,6 +42,9 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(Route.OWNER_LIST_PAGE){
                             OwnersListScreen(scaffoldState = scaffoldState)
+                        }
+                        composable(Route.MAP_SCREEN){
+                            MapScreen()
                         }
                     }
                 }

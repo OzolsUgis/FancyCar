@@ -11,8 +11,9 @@ data class VehicleDataEntity(
     val model: String,
     val vin: String,
     val year: String,
-    val latitude : String? = null,
-    val longitude : String? = null,
+    val latitude : Double? = null,
+    val longitude : Double? = null,
+    val ownerId : Int?,
     @PrimaryKey(autoGenerate = false)
     val vehicleid: Int
 )

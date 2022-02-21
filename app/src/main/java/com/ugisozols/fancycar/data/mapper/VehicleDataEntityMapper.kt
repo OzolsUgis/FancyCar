@@ -11,8 +11,9 @@ fun Vehicle.toVehicleDataEntity() : VehicleDataEntity {
         model = model,
         vin = vin,
         year = year,
-        latitude = "00",
-        longitude = "00",
-        vehicleid = vehicleid
+        latitude = 0.0,
+        longitude = 0.0,
+        vehicleid = vehicleid,
+        ownerId = null
     )
 }
