@@ -11,5 +11,4 @@ data class OwnerDataEntity(
     val vehicles : List<VehicleDataEntity>,
     @PrimaryKey(autoGenerate = false)
     val ownerId : Int? = null
-
 )

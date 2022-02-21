@@ -1,5 +1,6 @@
 package com.ugisozols.fancycar.data.remote
 
+import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.ugisozols.fancycar.data.remote.dto.ApiDto

@@ -80,9 +80,7 @@ class CarOwnerRepositoryImpl(
 
     override suspend fun getVehicleLocation(ownerId: Int): Flow<Resource<CarOwner>> = flow{
         emit(Resource.Loading())
-
         val owner = dao.getOwnerById(ownerId).toCarOwner()
-
         emit(Resource.Loading(owner))
         try {
             delay(500L)
@@ -90,7 +88,6 @@ class CarOwnerRepositoryImpl(
                 owner.toOwnerDataEntity().vehicles.forEach {
                     dao.insertVehicle(it)
                 }
-
                 val apiUpdate = api.getVehicleLocation(ownerId)
                 val newOwnerVehicleList : MutableList<VehicleDataEntity> = mutableListOf()
                 apiUpdate.data.forEach {
@@ -111,7 +108,6 @@ class CarOwnerRepositoryImpl(
                     )
                 )
             }
-
         }catch (e: HttpException) {
             emit(
                 Resource.Error(
@@ -129,7 +125,6 @@ class CarOwnerRepositoryImpl(
             )
         }
         val updatedOwnerData = dao.getOwnerById(ownerId)
-
         emit(Resource.Success(updatedOwnerData.toCarOwner()))
     }
 }

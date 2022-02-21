@@ -2,6 +2,8 @@ package com.ugisozols.fancycar.di
 
 import android.app.Application
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import androidx.room.Room
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -11,6 +13,7 @@ import com.ugisozols.fancycar.data.remote.DriverApi
 import com.ugisozols.fancycar.data.repository.CarOwnerRepositoryImpl
 import com.ugisozols.fancycar.domain.repository.CarOwnerRepository
 import com.ugisozols.fancycar.domain.use_cases.GetOwners
+import com.ugisozols.fancycar.domain.use_cases.UpdateOwnersVehicles
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -64,5 +67,11 @@ object AppModule {
     @Singleton
     fun provideGetOwnersUseCase(repository : CarOwnerRepository) : GetOwners{
         return GetOwners(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUpdateOwnersVehicles(repository: CarOwnerRepository): UpdateOwnersVehicles {
+        return UpdateOwnersVehicles(repository)
     }
 }

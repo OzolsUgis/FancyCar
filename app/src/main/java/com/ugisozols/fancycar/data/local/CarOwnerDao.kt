@@ -3,7 +3,6 @@ package com.ugisozols.fancycar.data.local
 import androidx.room.*
 import com.ugisozols.fancycar.data.local.entity.OwnerDataEntity
 import com.ugisozols.fancycar.data.local.entity.VehicleDataEntity
-import com.ugisozols.fancycar.data.local.entity.relations.OwnersWithVehicles
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.selects.select
 
