@@ -37,7 +37,7 @@ class MapScreenViewModel @Inject constructor(
     private fun onUpdateList() {
         job?.cancel()
         job = viewModelScope.launch {
-            repository.getVehicleLocation(1).collect{ result ->
+            repository.getVehicleLocation(3).collect{ result ->
                 when (result) {
                     is Resource.Error -> {
                         _state.value = state.value.copy(

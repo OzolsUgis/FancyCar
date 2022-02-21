@@ -17,3 +17,18 @@ fun VehicleDataEntity.toOwnerVehicles() : OwnerVehicles{
         longitude = 0.0
     )
 }
+
+fun OwnerVehicles.toVehicleDataEntity() : VehicleDataEntity{
+    return VehicleDataEntity(
+        color = color,
+        foto = foto,
+        make = make,
+        model = model,
+        vin = vin,
+        year = year,
+        latitude = latitude,
+        longitude = longitude,
+        ownerId = ownerId,
+        vehicleid = vehicleid
+    )
+}

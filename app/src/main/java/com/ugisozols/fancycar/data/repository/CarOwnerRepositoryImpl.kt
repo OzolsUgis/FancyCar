@@ -4,6 +4,7 @@ import android.util.Log
 import com.google.gson.JsonSyntaxException
 import com.ugisozols.fancycar.R
 import com.ugisozols.fancycar.data.local.CarOwnerDao
+import com.ugisozols.fancycar.data.local.entity.VehicleDataEntity
 import com.ugisozols.fancycar.data.mapper.toCarOwner
 import com.ugisozols.fancycar.data.mapper.toOwnerDataEntity
 import com.ugisozols.fancycar.data.mapper.toOwnerVehicles
@@ -17,6 +18,7 @@ import com.ugisozols.fancycar.util.UiText
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import okio.IOException
 import retrofit2.HttpException
 
@@ -77,34 +79,44 @@ class CarOwnerRepositoryImpl(
     }
 
     override suspend fun getVehicleLocation(ownerId: Int): Flow<Resource<CarOwner>> = flow{
-        emit(
-            Resource.Loading()
-        )
-        val vehiclesData = dao.getOwnerWithVehicles(2)
-        Log.d("MY_APP", vehiclesData.toString())
-        emit(Resource.Loading(vehiclesData.owner.toCarOwner()))
+        emit(Resource.Loading())
+
+        val owner = dao.getOwnerById(ownerId).toCarOwner()
+
+        emit(Resource.Loading(owner))
         try {
             delay(500L)
-            val locationUpdateResult = api.getVehicleLocation(2)
-            locationUpdateResult.data.forEach { newLocation ->
-                dao.updateVehicle(
-                    newLocation.vehicleid,
-                    newLocation.lat,
-                    newLocation.lon
+            try {
+                owner.toOwnerDataEntity().vehicles.forEach {
+                    dao.insertVehicle(it)
+                }
+
+                val apiUpdate = api.getVehicleLocation(ownerId)
+                val newOwnerVehicleList : MutableList<VehicleDataEntity> = mutableListOf()
+                apiUpdate.data.forEach {
+                    val ownerVehicle = dao.getVehicleById(it.vehicleid)
+                    val newLocationUpdatedVehicle = ownerVehicle.copy(
+                        latitude = it.lat,
+                        longitude = it.lon,
+                        ownerId = ownerId
+                    )
+                    newOwnerVehicleList.add(newLocationUpdatedVehicle)
+                }
+                dao.updateVehicles(ownerId, newOwnerVehicleList)
+            }catch (e: JsonSyntaxException) {
+                emit(
+                    Resource.Error(
+                        UiText.StringResource(R.string.api_error),
+                        owner
+                    )
                 )
             }
-        }catch (e : JsonSyntaxException){
-            emit(
-                Resource.Error(
-                    UiText.StringResource(R.string.api_error),
-                    vehiclesData.owner.toCarOwner()
-                )
-            )
-        } catch (e: HttpException) {
+
+        }catch (e: HttpException) {
             emit(
                 Resource.Error(
                     UiText.StringResource(R.string.http_exception_message),
-                    vehiclesData.owner.toCarOwner()
+                    owner
 
                 )
             )
@@ -112,13 +124,13 @@ class CarOwnerRepositoryImpl(
             emit(
                 Resource.Error(
                     UiText.StringResource(R.string.io_exception_message),
-                    vehiclesData.owner.toCarOwner()
+                    owner
                 )
             )
         }
-        val updatedOwnerData = dao.getOwnerWithVehicles(ownerId)
-        emit(Resource.Success(updatedOwnerData.owner.toCarOwner()))
+        val updatedOwnerData = dao.getOwnerById(ownerId)
 
+        emit(Resource.Success(updatedOwnerData.toCarOwner()))
     }
 }
 

@@ -12,3 +12,12 @@ fun OwnerDataEntity.toCarOwner() : CarOwner {
         id = ownerId
     )
 }
+
+fun CarOwner.toOwnerDataEntity() : OwnerDataEntity {
+    return OwnerDataEntity(
+        userImage = userPicture,
+        name = name,
+        surname = surname,
+        vehicles  = vehicles.map { it.toVehicleDataEntity()}
+    )
+}

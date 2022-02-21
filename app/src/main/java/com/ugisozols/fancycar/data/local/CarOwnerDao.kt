@@ -4,6 +4,8 @@ import androidx.room.*
 import com.ugisozols.fancycar.data.local.entity.OwnerDataEntity
 import com.ugisozols.fancycar.data.local.entity.VehicleDataEntity
 import com.ugisozols.fancycar.data.local.entity.relations.OwnersWithVehicles
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.selects.select
 
 @Dao
 interface CarOwnerDao {
@@ -17,16 +19,25 @@ interface CarOwnerDao {
     @Query("SELECT * FROM ownerdataentity")
     suspend fun getOwners(): List<OwnerDataEntity>
 
+    @Query("SELECT * FROM ownerdataentity WHERE ownerId =:ownerId")
+    suspend fun getOwnerById(ownerId : Int) : OwnerDataEntity
 
-    @Query("""
-                UPDATE vehicledataentity 
-                SET latitude = :latitude, longitude = :longitude
-                WHERE vehicleid =:vehicleId
-        """)
-    suspend fun updateVehicle(vehicleId: Int, latitude: Double, longitude: Double)
 
-    @Transaction
-    @Query("SELECT * FROM ownerdataentity WHERE ownerId = :ownerId ")
-    suspend fun getOwnerWithVehicles(ownerId: Int): OwnersWithVehicles
+    @Query( "SELECT * FROM vehicledataentity WHERE vehicleid = :vehicleId")
+    suspend fun getVehicleById(vehicleId: Int): VehicleDataEntity
+
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertVehicle(vehicle : VehicleDataEntity)
+
+
+    @Query(
+        """
+            UPDATE ownerdataentity
+            SET vehicles = :vehicles
+            WHERE ownerId =:ownerId
+        """
+    )
+    suspend fun updateVehicles(ownerId: Int, vehicles : List<VehicleDataEntity>)
 
 }
