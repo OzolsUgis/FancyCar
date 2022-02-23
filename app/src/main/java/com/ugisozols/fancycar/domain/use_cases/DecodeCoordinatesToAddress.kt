@@ -6,7 +6,7 @@ import com.google.android.gms.maps.model.LatLng
 import java.util.*
 import javax.inject.Inject
 
-class DecodeCoordinatesToAddress @Inject constructor(
+class DecodeCoordinatesToAddress(
     private val context: Context
 ){
     operator fun invoke(latLng : LatLng) : String {

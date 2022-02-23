@@ -12,10 +12,7 @@ import com.ugisozols.fancycar.data.local.CarOwnerDatabase
 import com.ugisozols.fancycar.data.remote.DriverApi
 import com.ugisozols.fancycar.data.repository.CarOwnerRepositoryImpl
 import com.ugisozols.fancycar.domain.repository.CarOwnerRepository
-import com.ugisozols.fancycar.domain.use_cases.DecodeColorFromString
-import com.ugisozols.fancycar.domain.use_cases.DecodeCoordinatesToAddress
-import com.ugisozols.fancycar.domain.use_cases.GetOwners
-import com.ugisozols.fancycar.domain.use_cases.UpdateOwnersVehicles
+import com.ugisozols.fancycar.domain.use_cases.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -88,4 +85,5 @@ object AppModule {
     fun provideDecodeColorFromString() : DecodeColorFromString{
         return DecodeColorFromString()
     }
+
 }

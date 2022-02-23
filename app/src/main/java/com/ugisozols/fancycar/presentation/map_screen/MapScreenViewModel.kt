@@ -1,22 +1,15 @@
 package com.ugisozols.fancycar.presentation.map_screen
 
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
 import androidx.compose.runtime.State
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.accompanist.permissions.rememberPermissionState
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
 import com.ugisozols.fancycar.R
+import com.ugisozols.fancycar.domain.model.DeviceLocation
 import com.ugisozols.fancycar.domain.model.OwnerVehicles
 import com.ugisozols.fancycar.domain.use_cases.DecodeColorFromString
 import com.ugisozols.fancycar.domain.use_cases.DecodeCoordinatesToAddress
@@ -36,8 +29,9 @@ class MapScreenViewModel @Inject constructor(
     private val updateOwnersVehicles : UpdateOwnersVehicles,
     private val decodeCoordinates : DecodeCoordinatesToAddress,
     private val decodeColor : DecodeColorFromString,
-    private val savedStateHandle: SavedStateHandle
-) : ViewModel() {
+    private val getDeviceLocation: GetDeviceLocation
+
+    ) : ViewModel() {
 
     private val _state = mutableStateOf(MapScreenState())
     val state: State<MapScreenState> = _state
@@ -53,19 +47,18 @@ class MapScreenViewModel @Inject constructor(
         isPermissionGranted.value = true
     }
 
-    var vehicleColor = mutableStateOf(Color.Black)
-        private set
-    fun decodeVehicleColor(string: String){
-        vehicleColor.value = decodeColor(string)
-    }
-
     var decodedAddress = mutableStateOf("")
         private set
     fun decodeCoordinatesToAddress(latLng: LatLng){
         val address = decodeCoordinates(latLng)
         decodedAddress.value = address
     }
+    var vehicleColor = mutableStateOf(Color.Black)
+        private set
 
+    fun decodeVehicleColor(string: String){
+        vehicleColor.value = decodeColor(string)
+    }
 
     var isMapLoaded = mutableStateOf(false)
         private set
@@ -85,6 +78,19 @@ class MapScreenViewModel @Inject constructor(
         isExtensionVisible.value = true
     }
 
+    var deviceCurrentLocation = mutableStateOf(DeviceLocation(0.0,0.0))
+        private set
+    fun getDeviceLocation(){
+        viewModelScope.launch {
+            getDeviceLocation(true).collect {
+                deviceCurrentLocation.value = it.copy()
+            }
+        }
+    }
+
+    init {
+        getDeviceLocation()
+    }
 
     private var job: Job? = null
 
@@ -126,5 +132,9 @@ class MapScreenViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun getDeviceLocation(context: Context){
+        val fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
     }
 }

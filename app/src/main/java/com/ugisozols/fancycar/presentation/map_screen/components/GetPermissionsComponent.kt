@@ -35,7 +35,7 @@ fun GetPermission(
         key1 = lifecycleOwner,
         effect = {
             val observer = LifecycleEventObserver{_,event ->
-                if(event == Lifecycle.Event.ON_START){
+                if(event == Lifecycle.Event.ON_START ){
                     permissionState.launchMultiplePermissionRequest()
                 }
             }

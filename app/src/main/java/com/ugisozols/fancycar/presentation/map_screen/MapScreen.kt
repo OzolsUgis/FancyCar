@@ -39,6 +39,11 @@ fun MapScreen(
     val state = viewModel.state.value
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
+    var permissions = remember {
+        mutableStateOf(false)
+    }
+
+    Log.d("My_Tag", viewModel.deviceCurrentLocation.value.toString())
 
     LaunchedEffect(key1 = true) {
         viewModel.event.collect { event ->
@@ -69,6 +74,7 @@ fun MapScreen(
         lifecycleOwner = LocalLifecycleOwner.current,
         onPermissionGranted = {
             viewModel.onPermissionGranted()
+            permissions.value = true
         },
         onIsPermanentlyDenied = {
             viewModel.onIsPermanentlyDenied()
@@ -93,7 +99,7 @@ fun MapScreen(
             },
             modifier = Modifier.fillMaxHeight(0.90f)
         )
-        if (!isMapLoaded) {
+        if (!isMapLoaded || !permissions.value) {
             AnimatedVisibility(
                 modifier = Modifier.matchParentSize(),
                 visible = !isMapLoaded,

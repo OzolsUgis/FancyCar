@@ -27,13 +27,8 @@ fun VehicleItem(
     modifier : Modifier = Modifier,
     viewModel: MapScreenViewModel = hiltViewModel()
 ){
-    LaunchedEffect(key1 = true){
-        viewModel.decodeCoordinatesToAddress(LatLng(vehicles.latitude,vehicles.longitude))
-    }
-    LaunchedEffect(key1 = true){
-        viewModel.decodeVehicleColor(vehicles.color)
-    }
-
+    viewModel.decodeCoordinatesToAddress(LatLng(vehicles.latitude,vehicles.longitude))
+    viewModel.decodeVehicleColor(vehicles.color )
 
     val spacing = LocalSpacing.current
     Box(modifier = modifier.wrapContentHeight()){
