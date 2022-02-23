@@ -10,5 +10,6 @@ data class OwnerVehicles(
     val vin: String,
     val year: String,
     val latitude : Double,
-    val longitude : Double
+    val longitude : Double,
+    val isShownInDetails : Boolean
 )

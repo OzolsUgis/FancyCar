@@ -124,7 +124,10 @@ class CarOwnerRepositoryImpl(
                 )
             )
         }
+        Log.d("MY_APP", "tEST")
         val updatedOwnerData = dao.getOwnerById(ownerId)
+        Log.d("MY_APP_UPDATED", updatedOwnerData.toCarOwner().toString())
+
         emit(Resource.Success(updatedOwnerData.toCarOwner()))
     }
 }

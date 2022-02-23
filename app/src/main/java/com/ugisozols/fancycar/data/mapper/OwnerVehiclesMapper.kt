@@ -13,8 +13,9 @@ fun VehicleDataEntity.toOwnerVehicles() : OwnerVehicles{
         vehicleid = vehicleid,
         vin = vin,
         year = year,
-        latitude = 0.0,
-        longitude = 0.0
+        latitude = latitude ?: 0.0 ,
+        longitude = longitude ?: 0.0,
+        isShownInDetails = false
     )
 }
 

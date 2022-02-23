@@ -44,7 +44,7 @@ class MainActivity : ComponentActivity() {
                             OwnersListScreen(scaffoldState = scaffoldState)
                         }
                         composable(Route.MAP_SCREEN){
-                            MapScreen()
+                            MapScreen(scaffoldState)
                         }
                     }
                 }

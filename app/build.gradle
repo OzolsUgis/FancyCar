@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'dagger.hilt.android.plugin'
     id 'kotlin-kapt'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 android {
@@ -88,4 +89,14 @@ dependencies {
 
     //Coil
     implementation "io.coil-kt:coil-compose:1.4.0"
+
+    //GoogleMaps
+    implementation "com.google.maps.android:maps-compose:1.0.0"
+    implementation "com.google.android.gms:play-services-maps:18.0.2"
+
+
+    // Permission handling
+    implementation "com.google.accompanist:accompanist-permissions:0.21.1-beta"
 }
+
+

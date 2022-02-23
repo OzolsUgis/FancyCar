@@ -12,6 +12,8 @@ import com.ugisozols.fancycar.data.local.CarOwnerDatabase
 import com.ugisozols.fancycar.data.remote.DriverApi
 import com.ugisozols.fancycar.data.repository.CarOwnerRepositoryImpl
 import com.ugisozols.fancycar.domain.repository.CarOwnerRepository
+import com.ugisozols.fancycar.domain.use_cases.DecodeColorFromString
+import com.ugisozols.fancycar.domain.use_cases.DecodeCoordinatesToAddress
 import com.ugisozols.fancycar.domain.use_cases.GetOwners
 import com.ugisozols.fancycar.domain.use_cases.UpdateOwnersVehicles
 import dagger.Module
@@ -73,5 +75,17 @@ object AppModule {
     @Singleton
     fun provideUpdateOwnersVehicles(repository: CarOwnerRepository): UpdateOwnersVehicles {
         return UpdateOwnersVehicles(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDecodeCoordinates(context: Application) : DecodeCoordinatesToAddress{
+        return DecodeCoordinatesToAddress(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDecodeColorFromString() : DecodeColorFromString{
+        return DecodeColorFromString()
     }
 }

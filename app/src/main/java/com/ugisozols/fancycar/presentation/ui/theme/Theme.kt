@@ -12,7 +12,8 @@ private val DarkColorPalette = darkColors(
 )
 
 private val LightColorPalette = lightColors(
-    background = BackgroundColor
+    background = BackgroundColor,
+    surface = HeaderObject
 )
 
 @Composable
