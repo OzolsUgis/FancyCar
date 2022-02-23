@@ -1,6 +1,7 @@
 package com.ugisozols.fancycar.presentation.owner_list_screen.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -14,10 +15,13 @@ import com.ugisozols.fancycar.domain.model.OwnerVehicles
 import com.ugisozols.fancycar.presentation.ui.theme.HeadingColor
 import com.ugisozols.fancycar.presentation.ui.theme.LocalSpacing
 import com.ugisozols.fancycar.presentation.ui.theme.quicksand
+import com.ugisozols.fancycar.util.UiEvent
+import com.ugisozols.fancycar.util.navigation.Route
 
 @Composable
 fun VehicleListItem(
     vehicles: OwnerVehicles,
+    onNavigate : () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val spacing = LocalSpacing.current
@@ -27,6 +31,9 @@ fun VehicleListItem(
             .fillMaxWidth()
             .fillMaxHeight()
             .padding(spacing.spacingSmall)
+            .clickable {
+                onNavigate()
+            }
     ) {
         Row(
             Modifier.fillMaxWidth()

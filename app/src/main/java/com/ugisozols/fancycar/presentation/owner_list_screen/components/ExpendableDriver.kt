@@ -56,6 +56,7 @@ fun ExpendableDriver(
         .background(ObjectColor)
         .clickable {
             click.value = !click.value
+
         }
     ) {
         Column() {

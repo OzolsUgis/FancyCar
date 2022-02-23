@@ -38,6 +38,7 @@ import com.ugisozols.fancycar.presentation.ui.theme.*
 fun MapScreenHeader(
     owner: CarOwner?,
     isVisible : Boolean,
+    onClick : () -> Unit,
     content: @Composable () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -73,7 +74,7 @@ fun MapScreenHeader(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     IconButton(
-                        onClick = { /*TODO*/ },
+                        onClick = { onClick() },
                         modifier
                             .width(80.dp)
                             .height(30.dp)

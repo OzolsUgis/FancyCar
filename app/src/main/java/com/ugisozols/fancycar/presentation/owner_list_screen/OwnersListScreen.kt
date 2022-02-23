@@ -24,11 +24,13 @@ import com.ugisozols.fancycar.presentation.owner_list_screen.components.VehicleL
 import com.ugisozols.fancycar.presentation.ui.theme.*
 import com.ugisozols.fancycar.util.UiEvent
 import com.ugisozols.fancycar.util.UiText
+import com.ugisozols.fancycar.util.navigation.Route
 import kotlinx.coroutines.flow.collect
 
 @Composable
 fun OwnersListScreen(
     scaffoldState: ScaffoldState,
+    onNavigate : (UiEvent.Navigate) -> Unit,
     viewModel: OwnerListScreenViewModel = hiltViewModel()
 ) {
     val spacing = LocalSpacing.current
@@ -80,11 +82,12 @@ fun OwnersListScreen(
                                   )
                                   .fillMaxWidth()
                                   .background(ObjectColor)
-                                  .clickable { }
+
                           ) {
                              owner.vehicles.forEach { vehicle ->
                                  VehicleListItem(
-                                    vehicles = vehicle
+                                    vehicles = vehicle,
+                                     onNavigate = {onNavigate(UiEvent.Navigate(Route.MAP_SCREEN + "/${owner.id}"))}
                                  )
                              }
                           }

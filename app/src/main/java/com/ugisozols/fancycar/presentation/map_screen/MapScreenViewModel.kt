@@ -11,6 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.accompanist.permissions.rememberPermissionState
@@ -34,7 +35,8 @@ import javax.inject.Inject
 class MapScreenViewModel @Inject constructor(
     private val updateOwnersVehicles : UpdateOwnersVehicles,
     private val decodeCoordinates : DecodeCoordinatesToAddress,
-    private val decodeColor : DecodeColorFromString
+    private val decodeColor : DecodeColorFromString,
+    private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val _state = mutableStateOf(MapScreenState())
@@ -87,17 +89,13 @@ class MapScreenViewModel @Inject constructor(
     private var job: Job? = null
 
 
-    init {
-        onOwnerVehicleUpdate(3)
-    }
-
     fun onIsPermanentlyDenied(){
         viewModelScope.launch {
             _event.send(UiEvent.ShowSnackbar(UiText.StringResource(R.string.permission_permanently_denied)))
         }
     }
 
-    private fun onOwnerVehicleUpdate(ownerId : Int) {
+    fun onOwnerVehicleUpdate(ownerId : Int) {
         job?.cancel()
         job = viewModelScope.launch {
             updateOwnersVehicles(ownerId).collect{ result ->
