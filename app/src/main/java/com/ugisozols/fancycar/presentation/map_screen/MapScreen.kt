@@ -37,13 +37,16 @@ fun MapScreen(
 
     val isMapLoaded = viewModel.isMapLoaded.value
     val state = viewModel.state.value
+    viewModel.deviceCurrentLocation.value
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     var permissions = remember {
         mutableStateOf(false)
     }
 
-    Log.d("My_Tag", viewModel.deviceCurrentLocation.value.toString())
+    viewModel.getDeviceLocation(context)
+
+    Log.d("My_Tag_device", viewModel.deviceCurrentLocation.value.toString())
 
     LaunchedEffect(key1 = true) {
         viewModel.event.collect { event ->
@@ -90,7 +93,7 @@ fun MapScreen(
     ) {
         GoogleMapView(
             vehicles = state.Owner?.vehicles,
-            LatLng(56.946285, 24.105078),
+            myLocation = viewModel.deviceCurrentLocation.value,
             onMapLoaded = { viewModel.onMapLoaded() },
             onMarkerClick = { vehicle ->
                 Log.d("test", vehicle.toString())

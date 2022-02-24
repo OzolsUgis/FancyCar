@@ -1,6 +1,8 @@
 package com.ugisozols.fancycar.presentation.map_screen
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
@@ -8,6 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.tasks.OnCompleteListener
 import com.ugisozols.fancycar.R
 import com.ugisozols.fancycar.domain.model.DeviceLocation
 import com.ugisozols.fancycar.domain.model.OwnerVehicles
@@ -28,10 +31,10 @@ import javax.inject.Inject
 class MapScreenViewModel @Inject constructor(
     private val updateOwnersVehicles : UpdateOwnersVehicles,
     private val decodeCoordinates : DecodeCoordinatesToAddress,
-    private val decodeColor : DecodeColorFromString,
-    private val getDeviceLocation: GetDeviceLocation
-
+    private val decodeColor : DecodeColorFromString
     ) : ViewModel() {
+
+
 
     private val _state = mutableStateOf(MapScreenState())
     val state: State<MapScreenState> = _state
@@ -78,19 +81,13 @@ class MapScreenViewModel @Inject constructor(
         isExtensionVisible.value = true
     }
 
-    var deviceCurrentLocation = mutableStateOf(DeviceLocation(0.0,0.0))
+    var deviceCurrentLocation = mutableStateOf(LatLng(56.946285,24.105078))
         private set
-    fun getDeviceLocation(){
-        viewModelScope.launch {
-            getDeviceLocation(true).collect {
-                deviceCurrentLocation.value = it.copy()
-            }
-        }
+    fun saveCurrentDeviceLocation(latLng: LatLng){
+        deviceCurrentLocation.value = latLng
     }
 
-    init {
-        getDeviceLocation()
-    }
+
 
     private var job: Job? = null
 
@@ -134,7 +131,30 @@ class MapScreenViewModel @Inject constructor(
         }
     }
 
+
+    @SuppressLint("MissingPermission")
     fun getDeviceLocation(context: Context){
         val fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
+
+        try {
+            if(isPermissionGranted.value){
+                val locationResult = fusedLocationProviderClient.lastLocation
+                locationResult.addOnCompleteListener(){
+                    if (it.isSuccessful){
+                        val result = it.result
+                        saveCurrentDeviceLocation(
+                            LatLng(
+                                result.latitude,
+                                result.longitude
+                            )
+                        )
+                    }else{
+                        Log.d("MY_TAG", "onComplete : location null")
+                    }
+                }
+            }
+        }catch (e : SecurityException){
+            e.printStackTrace()
+        }
     }
 }

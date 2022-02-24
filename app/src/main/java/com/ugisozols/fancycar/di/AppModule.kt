@@ -86,4 +86,9 @@ object AppModule {
         return DecodeColorFromString()
     }
 
+    @Provides
+    @Singleton
+    fun provideContext(context: Application): Context{
+        return context
+    }
 }
