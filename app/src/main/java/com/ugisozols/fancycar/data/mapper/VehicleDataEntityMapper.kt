@@ -1,7 +1,7 @@
 package com.ugisozols.fancycar.data.mapper
 
 import com.ugisozols.fancycar.data.local.entity.VehicleDataEntity
-import com.ugisozols.fancycar.data.remote.dto.Vehicle
+import com.ugisozols.fancycar.data.remote.driverApi.dto.Vehicle
 
 fun Vehicle.toVehicleDataEntity() : VehicleDataEntity {
     return VehicleDataEntity(

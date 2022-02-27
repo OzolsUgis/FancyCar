@@ -14,6 +14,7 @@ import com.google.maps.android.compose.*
 
 import com.ugisozols.fancycar.R
 import com.ugisozols.fancycar.domain.model.OwnerVehicles
+import com.ugisozols.fancycar.presentation.ui.theme.HeadingColor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -34,6 +35,7 @@ fun GoogleMapView(
             13f
         )
     }
+
 
 
 
@@ -85,8 +87,18 @@ fun GoogleMapView(
             bounds.include(LatLng(vehicle.latitude,vehicle.longitude))
 
         }
+        Polyline(
+            points = listOf(),
+            color = HeadingColor,
+            width = 5f
+        )
+
+
+
+
 
     }
+
 
 
 

@@ -7,18 +7,15 @@ import com.ugisozols.fancycar.data.local.CarOwnerDao
 import com.ugisozols.fancycar.data.local.entity.VehicleDataEntity
 import com.ugisozols.fancycar.data.mapper.toCarOwner
 import com.ugisozols.fancycar.data.mapper.toOwnerDataEntity
-import com.ugisozols.fancycar.data.mapper.toOwnerVehicles
-import com.ugisozols.fancycar.data.remote.DriverApi
-import com.ugisozols.fancycar.data.remote.dto.UserData
+import com.ugisozols.fancycar.data.remote.driverApi.DriverApi
+import com.ugisozols.fancycar.data.remote.driverApi.dto.UserData
 import com.ugisozols.fancycar.domain.model.CarOwner
-import com.ugisozols.fancycar.domain.model.OwnerVehicles
 import com.ugisozols.fancycar.domain.repository.CarOwnerRepository
 import com.ugisozols.fancycar.util.Resource
 import com.ugisozols.fancycar.util.UiText
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
 import okio.IOException
 import retrofit2.HttpException
 

@@ -1,4 +1,4 @@
-package com.ugisozols.fancycar.data.remote.dto
+package com.ugisozols.fancycar.data.remote.driverApi.dto
 
 data class Vehicle(
     val color: String,

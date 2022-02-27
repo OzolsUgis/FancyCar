@@ -14,23 +14,30 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import com.google.android.gms.maps.model.LatLng
+import com.ugisozols.fancycar.R
 import com.ugisozols.fancycar.presentation.map_screen.components.GetPermission
 import com.ugisozols.fancycar.presentation.map_screen.components.GoogleMapView
 import com.ugisozols.fancycar.presentation.map_screen.components.MapScreenHeader
 import com.ugisozols.fancycar.presentation.map_screen.components.VehicleItem
+import com.ugisozols.fancycar.presentation.ui.theme.ContentColor
+import com.ugisozols.fancycar.presentation.ui.theme.HeaderObject
+import com.ugisozols.fancycar.presentation.ui.theme.HeadingColor
 import com.ugisozols.fancycar.util.UiEvent
+import com.ugisozols.fancycar.util.UiText
 import com.ugisozols.fancycar.util.navigation.Route
 import kotlinx.coroutines.flow.collect
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun MapScreen(
-    scaffoldState : ScaffoldState,
-    ownerId : Int?,
+    scaffoldState: ScaffoldState,
+    ownerId: Int?,
     onNavigate: (UiEvent.Navigate) -> Unit,
     viewModel: MapScreenViewModel = hiltViewModel()
 ) {
@@ -46,6 +53,7 @@ fun MapScreen(
 
     viewModel.getDeviceLocation(context)
 
+
     Log.d("My_Tag_device", viewModel.deviceCurrentLocation.value.toString())
 
     LaunchedEffect(key1 = true) {
@@ -60,9 +68,9 @@ fun MapScreen(
     DisposableEffect(
         key1 = lifecycleOwner,
         effect = {
-            val observer = LifecycleEventObserver{_,event ->
-                if(event == Lifecycle.Event.ON_START){
-                    viewModel.onOwnerVehicleUpdate(ownerId !!)
+            val observer = LifecycleEventObserver { _, event ->
+                if (event == Lifecycle.Event.ON_START) {
+                    viewModel.onOwnerVehicleUpdate(ownerId!!)
                 }
             }
             lifecycleOwner.lifecycle.addObserver(observer)
@@ -73,6 +81,10 @@ fun MapScreen(
 
     )
 
+    LaunchedEffect(key1 = true){
+
+    }
+
     GetPermission(
         lifecycleOwner = LocalLifecycleOwner.current,
         onPermissionGranted = {
@@ -80,7 +92,7 @@ fun MapScreen(
             permissions.value = true
         },
         onIsPermanentlyDenied = {
-            viewModel.onIsPermanentlyDenied()
+
         }
     )
 
@@ -118,7 +130,7 @@ fun MapScreen(
     }
     Box(modifier = Modifier.fillMaxSize()) {
         MapScreenHeader(
-            owner = state.Owner, 
+            owner = state.Owner,
             modifier = Modifier.alpha(1f),
             isVisible = viewModel.isExtensionVisible.value,
             onClick = { onNavigate(UiEvent.Navigate(Route.OWNER_LIST_PAGE)) },
@@ -127,4 +139,29 @@ fun MapScreen(
             }
         )
     }
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.BottomCenter
+    ) {
+        if (viewModel.isExtensionVisible.value) {
+            Button(
+                onClick = {
+                    viewModel.setSelectButton()
+                    viewModel.getPolylines()
+                          },
+                elevation = ButtonDefaults.elevation(5.dp),
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = HeaderObject,
+                    contentColor = ContentColor
+                )
+            ) {
+                Text(
+                    text = stringResource(id = R.string.select).uppercase()
+                )
+            }
+        }
+
+    }
+
+
 }

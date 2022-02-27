@@ -1,13 +1,8 @@
-package com.ugisozols.fancycar.data.remote
+package com.ugisozols.fancycar.data.remote.driverApi
 
-import android.util.Log
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import com.ugisozols.fancycar.data.remote.dto.ApiDto
-import com.ugisozols.fancycar.data.remote.dto.VehicleLocationUpdateDto
-import retrofit2.Response
+import com.ugisozols.fancycar.data.remote.driverApi.dto.ApiDto
+import com.ugisozols.fancycar.data.remote.driverApi.dto.VehicleLocationUpdateDto
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface DriverApi {

@@ -13,4 +13,5 @@
     <string name="api_error">Server overloaded, Showing cached results </string>
     <string name="rationale_text">Location permission is needed to show route</string>
     <string name="permission_permanently_denied">Location permission was permanently denied. You can enable it in the app settings!</string>
+    <string name="select">select</string>
 </resources>

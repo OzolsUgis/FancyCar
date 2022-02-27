@@ -2,21 +2,19 @@ package com.ugisozols.fancycar.di
 
 import android.app.Application
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import androidx.room.Room
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.ugisozols.fancycar.data.local.CarOwnerDao
 import com.ugisozols.fancycar.data.local.CarOwnerDatabase
-import com.ugisozols.fancycar.data.remote.DriverApi
+import com.ugisozols.fancycar.data.remote.driverApi.DriverApi
 import com.ugisozols.fancycar.data.repository.CarOwnerRepositoryImpl
+import com.ugisozols.fancycar.data.repository.DirectionRepositoryImpl
 import com.ugisozols.fancycar.domain.repository.CarOwnerRepository
+import com.ugisozols.fancycar.domain.repository.DirectionRepository
 import com.ugisozols.fancycar.domain.use_cases.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -53,6 +51,7 @@ object AppModule {
             .create(DriverApi::class.java)
     }
 
+
     @Provides
     @Singleton
     fun provideCarOwnerRepository(
@@ -60,6 +59,18 @@ object AppModule {
         driverApi: DriverApi
     ) : CarOwnerRepository{
         return CarOwnerRepositoryImpl(db.dao, driverApi)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDirectionRepository() : DirectionRepository{
+        return DirectionRepositoryImpl()
+    }
+
+    @Provides
+    @Singleton
+    fun provideDirection(repository: DirectionRepository) : GetPolylines{
+        return GetPolylines(repository)
     }
 
     @Provides
