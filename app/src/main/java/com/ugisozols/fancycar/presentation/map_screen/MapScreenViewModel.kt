@@ -68,8 +68,8 @@ class MapScreenViewModel @Inject constructor(
 
     var isSelectButtonClicked = mutableStateOf(false)
         private set
-    fun setSelectButton(){
-        isSelectButtonClicked.value = !isSelectButtonClicked.value
+    fun setSelectButton(value : Boolean){
+        isSelectButtonClicked.value = value
     }
 
     var isMapLoaded = mutableStateOf(false)

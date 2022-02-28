@@ -3,6 +3,7 @@ package com.ugisozols.fancycar.presentation.map_screen.components
 import android.util.Log
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.LifecycleOwner
 import com.google.android.gms.maps.CameraUpdate
@@ -25,6 +26,7 @@ fun GoogleMapView(
     vehicles: List<OwnerVehicles>?,
     myLocation: LatLng,
     onMapLoaded: () -> Unit,
+    polypoints : List<List<LatLng>>,
     onMarkerClick: (vehicle: OwnerVehicles) -> Unit,
     modifier: Modifier = Modifier
 ){
@@ -82,16 +84,20 @@ fun GoogleMapView(
                 tag = vehicle,
                 onClick = {
                     markerClick(it, it.tag as OwnerVehicles)
-                }
+                },
+                anchor = Offset(0.5f, 0.5f)
             )
             bounds.include(LatLng(vehicle.latitude,vehicle.longitude))
 
         }
-        Polyline(
-            points = listOf(),
-            color = HeadingColor,
-            width = 5f
-        )
+        polypoints.forEach {
+            Polyline(
+                points = it,
+                color = HeadingColor,
+                width = 10f
+            )
+        }
+
 
 
 

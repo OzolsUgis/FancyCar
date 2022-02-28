@@ -2,16 +2,19 @@ package com.ugisozols.fancycar.presentation.map_screen
 
 import android.provider.ContactsContract
 import android.util.Log
+import android.widget.Space
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
@@ -28,6 +31,7 @@ import com.ugisozols.fancycar.presentation.map_screen.components.VehicleItem
 import com.ugisozols.fancycar.presentation.ui.theme.ContentColor
 import com.ugisozols.fancycar.presentation.ui.theme.HeaderObject
 import com.ugisozols.fancycar.presentation.ui.theme.HeadingColor
+import com.ugisozols.fancycar.presentation.ui.theme.LocalSpacing
 import com.ugisozols.fancycar.util.UiEvent
 import com.ugisozols.fancycar.util.UiText
 import com.ugisozols.fancycar.util.navigation.Route
@@ -41,7 +45,7 @@ fun MapScreen(
     onNavigate: (UiEvent.Navigate) -> Unit,
     viewModel: MapScreenViewModel = hiltViewModel()
 ) {
-
+    val spacing = LocalSpacing.current
     val isMapLoaded = viewModel.isMapLoaded.value
     val state = viewModel.state.value
     viewModel.deviceCurrentLocation.value
@@ -107,6 +111,7 @@ fun MapScreen(
             vehicles = state.Owner?.vehicles,
             myLocation = viewModel.deviceCurrentLocation.value,
             onMapLoaded = { viewModel.onMapLoaded() },
+            polypoints = viewModel.polylines.value,
             onMarkerClick = { vehicle ->
                 Log.d("test", vehicle.toString())
                 viewModel.setClickedMarkerVehicle(vehicle)
@@ -140,26 +145,45 @@ fun MapScreen(
         )
     }
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(spacing.spacingMedium)
+        ,
         contentAlignment = Alignment.BottomCenter
     ) {
-        if (viewModel.isExtensionVisible.value) {
-            Button(
-                onClick = {
-                    viewModel.setSelectButton()
-                    viewModel.getPolylines()
-                          },
-                elevation = ButtonDefaults.elevation(5.dp),
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = HeaderObject,
-                    contentColor = ContentColor
-                )
-            ) {
-                Text(
-                    text = stringResource(id = R.string.select).uppercase()
-                )
+        Column(
+            Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Bottom
+        ) {
+            if (viewModel.isExtensionVisible.value) {
+
+                Button(
+                    onClick = {
+                        viewModel.setSelectButton(true)
+                        viewModel.getPolylines()
+                        viewModel.isExtensionVisible.value = false
+                    },
+                    elevation = ButtonDefaults.elevation(5.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = HeaderObject,
+                        contentColor = ContentColor
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(70.dp))
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.select).uppercase()
+                    )
+                }
+                Spacer(modifier = Modifier.height(spacing.spacingExtraLarge))
+                Spacer(modifier = Modifier.height(spacing.spacingExtraLarge))
+
             }
+
         }
+
 
     }
 
