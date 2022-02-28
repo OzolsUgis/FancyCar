@@ -1,5 +1,7 @@
 package com.ugisozols.fancycar.presentation.map_screen
 
+import android.os.Handler
+import android.os.Looper
 import android.provider.ContactsContract
 import android.util.Log
 import android.widget.Space
@@ -51,14 +53,10 @@ fun MapScreen(
     viewModel.deviceCurrentLocation.value
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
-    var permissions = remember {
-        mutableStateOf(false)
-    }
+
 
     viewModel.getDeviceLocation(context)
 
-
-    Log.d("My_Tag_device", viewModel.deviceCurrentLocation.value.toString())
 
     LaunchedEffect(key1 = true) {
         viewModel.event.collect { event ->
@@ -72,9 +70,22 @@ fun MapScreen(
     DisposableEffect(
         key1 = lifecycleOwner,
         effect = {
-            val observer = LifecycleEventObserver { _, event ->
-                if (event == Lifecycle.Event.ON_START) {
+            val handler = Handler(Looper.getMainLooper())
+            val runnable = object : Runnable {
+                override fun run() {
                     viewModel.onOwnerVehicleUpdate(ownerId!!)
+                    // 60000 - 1 minute
+                    handler.postDelayed(this,60000)
+                }
+            }
+            val observer = LifecycleEventObserver { _, event ->
+                when(event){
+                    Lifecycle.Event.ON_START -> {
+                        handler.post(runnable)
+                    }
+                    Lifecycle.Event.ON_PAUSE ->{
+                        handler.removeCallbacks(runnable)
+                    }
                 }
             }
             lifecycleOwner.lifecycle.addObserver(observer)
@@ -93,7 +104,6 @@ fun MapScreen(
         lifecycleOwner = LocalLifecycleOwner.current,
         onPermissionGranted = {
             viewModel.onPermissionGranted()
-            permissions.value = true
         },
         onIsPermanentlyDenied = {
 
@@ -113,13 +123,12 @@ fun MapScreen(
             onMapLoaded = { viewModel.onMapLoaded() },
             polypoints = viewModel.polylines.value,
             onMarkerClick = { vehicle ->
-                Log.d("test", vehicle.toString())
                 viewModel.setClickedMarkerVehicle(vehicle)
                 viewModel.onExtensionVisibleChange()
             },
             modifier = Modifier.fillMaxHeight(0.90f)
         )
-        if (!isMapLoaded || !permissions.value) {
+        if (!isMapLoaded) {
             AnimatedVisibility(
                 modifier = Modifier.matchParentSize(),
                 visible = !isMapLoaded,

@@ -100,7 +100,9 @@ class MapScreenViewModel @Inject constructor(
         deviceCurrentLocation.value = latLng
     }
 
-    var polylines = mutableStateOf<List<List<LatLng>>>(listOf(listOf(LatLng(56.946285, 24.105078))))
+    var polylines = mutableStateOf<List<List<LatLng>>>(
+        listOf(listOf(LatLng(56.946285, 24.105078)))
+    )
 
 
     private var job: Job? = null
@@ -115,8 +117,6 @@ class MapScreenViewModel @Inject constructor(
                         clickedMarkerVehicle.value?.longitude !!
                     )
                 )
-                Log.d("My_App", "Location for polylines = from location${deviceCurrentLocation.value}, To location ${clickedMarkerVehicle.value?.latitude} and ${clickedMarkerVehicle.value?.longitude}")
-                Log.d("My_App", "Polyline = ${polylines.value}")
             }
         }
     }
