@@ -10,11 +10,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.tasks.OnCompleteListener
 import com.ugisozols.fancycar.R
-import com.ugisozols.fancycar.domain.model.DeviceLocation
 import com.ugisozols.fancycar.domain.model.OwnerVehicles
-import com.ugisozols.fancycar.domain.model.Polyline
 import com.ugisozols.fancycar.domain.use_cases.DecodeColorFromString
 import com.ugisozols.fancycar.domain.use_cases.DecodeCoordinatesToAddress
 import com.ugisozols.fancycar.domain.use_cases.GetPolylines

@@ -2,13 +2,11 @@ package com.ugisozols.fancycar.presentation.map_screen.components
 
 
 import android.util.Log
-import android.widget.Space
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -74,8 +72,6 @@ fun VehicleItem(
                     Text(text = "Color :")
                     Spacer(modifier = Modifier.width(spacing.spacingSmall))
                     Canvas(modifier = modifier.size(25.dp)){
-                        Log.d("VEHICLE_SCREEN", viewModel.vehicleColor.value.toString())
-
                         drawCircle(
                             color = viewModel.vehicleColor.value,
                             radius = 25f

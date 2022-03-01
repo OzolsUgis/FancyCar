@@ -37,9 +37,7 @@ import com.ugisozols.fancycar.util.loadPicture
 @Composable
 fun ExpendableDriver(
     owner: CarOwner,
-    onToggleClick: () -> Unit,
     content: @Composable () -> Unit,
-    modifier: Modifier
 ) {
     val spacing = LocalSpacing.current
     val context = LocalContext.current

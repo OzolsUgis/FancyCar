@@ -33,8 +33,6 @@ class CarOwnerRepositoryImpl(
         emit(Resource.Loading(data = ownersData))
 
         try {
-            // Delay is only for presentation
-            delay(500L)
             try {
                 val apiResponse = api.getDriverList()
                 dao.deleteAllOwners()
@@ -80,7 +78,6 @@ class CarOwnerRepositoryImpl(
         val owner = dao.getOwnerById(ownerId).toCarOwner()
         emit(Resource.Loading(owner))
         try {
-            delay(500L)
             try {
                 owner.toOwnerDataEntity().vehicles.forEach {
                     dao.insertVehicle(it)
@@ -121,9 +118,7 @@ class CarOwnerRepositoryImpl(
                 )
             )
         }
-        Log.d("MY_APP", "tEST")
         val updatedOwnerData = dao.getOwnerById(ownerId)
-        Log.d("MY_APP_UPDATED", updatedOwnerData.toCarOwner().toString())
 
         emit(Resource.Success(updatedOwnerData.toCarOwner()))
     }

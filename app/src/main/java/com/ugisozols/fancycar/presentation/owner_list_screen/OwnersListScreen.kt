@@ -71,7 +71,6 @@ fun OwnersListScreen(
                 items(viewModel.state.value.ownersList) { owner ->
                     ExpendableDriver(
                         owner = owner ,
-                        onToggleClick = { owner.isExpanded = !owner.isExpanded },
                         content = {
                           Column(
                               Modifier
@@ -91,8 +90,7 @@ fun OwnersListScreen(
                                  )
                              }
                           }
-                        },
-                        modifier = Modifier.wrapContentHeight()
+                        }
                     )
                 }
             }

@@ -39,8 +39,4 @@ interface CarOwnerDao {
     )
     suspend fun updateVehicles(ownerId: Int, vehicles : List<VehicleDataEntity>)
 
-//
-//    @Query("INSERT INTO vehicledataentity VALUES (:newVehicleDataEntity)")
-//    suspend fun insertNewVehicleData(vehicleId : Int, newVehicleDataEntity: VehicleDataEntity)
-
 }
